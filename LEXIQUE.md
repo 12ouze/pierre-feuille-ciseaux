@@ -17,7 +17,8 @@ te bloque.
 7. [Web — CSS](#7-web--css)
 8. [Web — JavaScript](#8-web--javascript)
 9. [Qualité de code](#9-qualité-de-code)
-10. [Pour aller plus loin](#10-pour-aller-plus-loin)
+10. [Git & GitHub](#10-git--github)
+11. [Pour aller plus loin](#11-pour-aller-plus-loin)
 
 ---
 
@@ -415,7 +416,173 @@ Du JavaScript pur, **sans aucune bibliothèque** ajoutée (pas de React, etc.).
 
 ---
 
-## 10. Pour aller plus loin
+## 10. Git & GitHub
+
+> Git suit l'historique de ton code sur ta machine ; GitHub héberge ce code en ligne pour le sauvegarder et le partager.
+
+### Concepts de base
+
+**Git**
+Le logiciel qui enregistre l'historique de ton projet : chaque version est sauvegardée, et tu peux revenir en arrière à tout moment.
+*Métaphore : une machine à remonter le temps pour ton code.*
+
+**GitHub**
+Un site web qui héberge tes projets Git dans le cloud, pour les sauvegarder, les partager et travailler à plusieurs. Git est l'outil, GitHub est l'hébergeur.
+*Métaphore : Git = ton carnet de brouillons ; GitHub = le coffre-fort en ligne où tu le ranges.*
+
+**Repository / repo**
+Le dossier de ton projet suivi par Git, avec tout son historique. Ton repo s'appelle `pierre-feuille-ciseaux`.
+
+**Commit**
+Une photo de ton projet à un instant donné, enregistrée dans l'historique. Tu en as déjà fait 3 sur ce projet.
+*Métaphore : une sauvegarde de jeu vidéo à laquelle tu pourras revenir.*
+
+**Hash**
+L'identifiant unique d'un commit, une suite de lettres et de chiffres. On utilise souvent ses 7 premiers caractères.
+*Exemple : `97490a9` désigne ton tout premier commit.*
+
+**Message de commit**
+La phrase qui décrit ce que contient un commit, pour t'y retrouver plus tard.
+*Exemple : « Premier commit : jeu PFC en Python + version web + lexique ».*
+
+**Staging area / index**
+La zone d'attente où tu places les fichiers à inclure dans le prochain commit. Rien n'est enregistré tant que tu n'as pas « commité ».
+*Métaphore : le tapis de caisse où tu poses tes articles avant de payer.*
+
+**Branch / branche**
+Une ligne de développement parallèle, pour expérimenter sans toucher à la version principale.
+*Métaphore : un brouillon séparé que tu pourras fusionner plus tard… ou jeter.*
+
+**main** (anciennement *master*)
+La branche principale, celle de référence. C'est sur `main` que vit ton projet.
+
+**HEAD**
+Un pointeur qui indique où tu te trouves dans l'historique, c'est-à-dire le commit sur lequel tu travailles actuellement.
+*Métaphore : le « Vous êtes ici » sur le plan de l'historique.*
+
+### Commandes essentielles
+
+**`git init`**
+Transforme un dossier ordinaire en repo Git (crée un historique vide).
+```bash
+git init
+```
+
+**`git status`**
+Montre l'état actuel : fichiers modifiés, en attente, ou non suivis.
+```bash
+git status
+```
+
+**`git add`**
+Place un ou plusieurs fichiers dans la staging area, prêts à être commités.
+```bash
+git add pfc.py        # un seul fichier
+git add .             # tout le dossier
+```
+
+**`git commit -m`**
+Enregistre les fichiers de la staging area dans un nouveau commit, avec un message (`-m`).
+```bash
+git commit -m "Ajoute README.md pour GitHub"
+```
+
+**`git log`**
+Affiche l'historique des commits, du plus récent au plus ancien.
+```bash
+git log --oneline     # une ligne par commit
+```
+
+**`git diff`**
+Montre précisément ce qui a changé dans tes fichiers (lignes ajoutées/supprimées), avant de commiter.
+```bash
+git diff
+```
+
+**`git restore`**
+Annule les modifications non enregistrées d'un fichier pour revenir à sa dernière version commitée.
+```bash
+git restore pfc.py
+```
+
+**`git push`**
+Envoie tes commits locaux vers GitHub.
+```bash
+git push
+```
+
+**`git pull`**
+Récupère sur ta machine les changements présents sur GitHub (l'inverse de `push`). Utile dès qu'on travaille à plusieurs ou sur deux ordinateurs.
+```bash
+git pull
+```
+
+### Remote & GitHub
+
+**Remote** (dépôt distant)
+La copie de ton repo hébergée ailleurs (sur GitHub), avec laquelle tu synchronises ton travail.
+
+**Origin**
+Le nom par défaut donné à ton remote principal. Pour toi, `origin` pointe vers `https://github.com/12ouze/pierre-feuille-ciseaux.git`.
+*Métaphore : « origin » est un surnom enregistré, comme « Maison » dans ton GPS.*
+
+**Clone**
+Copier un repo distant sur ta machine pour travailler dessus.
+```bash
+git clone https://github.com/12ouze/pierre-feuille-ciseaux.git
+```
+
+**README.md**
+Le fichier d'accueil d'un repo : GitHub l'affiche automatiquement sur la page du projet. Il explique à quoi sert le projet et comment l'utiliser.
+
+**.gitignore**
+Un fichier qui liste ce que Git doit **ignorer** (fichiers temporaires, secrets…). On s'en servira plus tard.
+
+**Untracked / Modified / Staged** (les 3 états)
+Les trois états d'un fichier vu par Git : **untracked** (jamais suivi), **modified** (suivi mais changé depuis le dernier commit), **staged** (ajouté et prêt à être commité).
+
+**Working tree clean**
+Le message de `git status` quand tout est commité : aucune modification en attente. C'est l'état actuel de ton repo.
+*Métaphore : un bureau rangé, rien ne traîne.*
+
+### Outils
+
+**GitHub CLI / `gh`**
+L'outil en ligne de commande de GitHub : il permet de piloter GitHub depuis le terminal (créer un repo, s'authentifier…) sans passer par le site web.
+
+**`gh auth login`**
+Connecte ton terminal à ton compte GitHub, une fois pour toutes.
+```bash
+gh auth login
+```
+
+**`gh repo create`**
+Crée un nouveau repo sur GitHub directement depuis le terminal. C'est ainsi que `pierre-feuille-ciseaux` est apparu en ligne.
+```bash
+gh repo create pierre-feuille-ciseaux --public --source=. --push
+```
+
+### Glossaire sécurité & connexion
+
+**Token** (jeton)
+Un mot de passe temporaire et révocable que GitHub utilise pour t'authentifier à la place de ton vrai mot de passe.
+*Métaphore : un badge d'accès, plus sûr que de confier la clé de la maison.*
+
+**HTTPS vs SSH**
+Deux façons de relier ton repo à GitHub : HTTPS (par lien web, le plus simple pour débuter) ou SSH (par clé, sans ressaisir d'identifiants).
+
+**2FA** (*authentification à deux facteurs*)
+Une double vérification à la connexion (mot de passe + code sur ton téléphone), pour protéger ton compte même si le mot de passe fuite.
+
+> 💡 **Cycle quotidien Git** — les 4 commandes à enchaîner :
+> 1. **Modifier** tes fichiers (écrire du code).
+> 2. `git add .` — ranger les changements dans la staging area.
+> 3. `git commit -m "message clair"` — enregistrer une photo.
+> 4. `git push` — envoyer sur GitHub.
+
+---
+
+## 11. Pour aller plus loin
 
 Des ressources **gratuites et en français** pour approfondir :
 

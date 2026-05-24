@@ -23,7 +23,7 @@ Il suffit de double-cliquer sur le fichier `index.html` pour l'ouvrir dans votre
 
 ## 📚 Apprentissage
 
-Ce projet a été créé en duo avec **Claude Code**, dans un objectif d'apprentissage par la pratique. Le fichier `LEXIQUE.md` rassemble **78 termes techniques** expliqués en français simple, pensés pour les débutants.
+Ce projet a été créé en duo avec **Claude Code**, dans un objectif d'apprentissage par la pratique. Le fichier `LEXIQUE.md` rassemble **110 termes techniques** expliqués en français simple, pensés pour les débutants.
 
 ## ⚙️ Tech stack
 
