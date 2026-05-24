@@ -38,7 +38,7 @@ def afficher_score(score):
 # met à jour le score. Sortie propre via 'q', Ctrl+C ou Ctrl+D : on affiche
 # alors le score final puis « À bientôt ! » sans traceback.
 def main():
-    print("Pierre-Feuille-Ciseaux (tape 'q' pour quitter)")
+    print("🎮 Pierre-Feuille-Ciseaux (tape 'q' pour quitter)")
     score = {"joueur": 0, "ordi": 0, "egalite": 0}
     try:
         while True:
