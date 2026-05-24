@@ -1,0 +1,259 @@
+/*
+  ============================================================================
+  style.css — L'APPARENCE de la page (les couleurs, tailles, espaces...)
+  ============================================================================
+  Le CSS décide à quoi RESSEMBLE chaque élément décrit dans index.html.
+  On désigne les éléments à habiller par :
+    - leur nom de balise        (ex. body, h1)
+    - leur classe, avec un point (ex. .carte, .bouton-coup)
+    - leur id, avec un dièse     (ex. #message-resultat)
+*/
+
+/* ---------------------------------------------------------------------------
+   1) LA PALETTE DE COULEURS
+   Les "variables" ci-dessous regroupent nos couleurs à un seul endroit.
+   Pour changer le thème du jeu, il suffit de modifier ces valeurs.
+   On les réutilise plus bas en écrivant var(--nom-de-la-variable).
+--------------------------------------------------------------------------- */
+:root {
+  --fond-page: #eef2ff;      /* le fond derrière la carte (bleu très clair) */
+  --fond-carte: #ffffff;     /* le fond de la carte du jeu (blanc) */
+  --texte: #1f2937;          /* la couleur du texte principal (gris foncé) */
+  --texte-doux: #6b7280;     /* texte secondaire, moins important (gris) */
+  --accent: #f97316;         /* couleur principale (violet/indigo) */
+  --accent-fonce: #4f46e5;   /* la même, en plus foncé, pour les survols */
+  --gagne: #16a34a;          /* vert : quand le joueur gagne */
+  --perdu: #dc2626;          /* rouge : quand l'ordi gagne */
+  --egalite: #6b7280;        /* gris : en cas d'égalité */
+}
+
+/* ---------------------------------------------------------------------------
+   2) RÉGLAGES GÉNÉRAUX
+--------------------------------------------------------------------------- */
+
+/*
+  "box-sizing: border-box" appliqué à tout (*) rend les tailles plus
+  prévisibles : la largeur d'un élément inclut ses bordures et marges
+  intérieures. C'est un réglage de confort très courant.
+*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* Une police "système" : nette et lisible, déjà présente sur l'ordinateur. */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texte);
+  background-color: var(--fond-page);
+
+  /* On centre la carte horizontalement ET verticalement dans la fenêtre. */
+  display: flex;
+  justify-content: center;   /* centre horizontalement */
+  align-items: center;       /* centre verticalement */
+  min-height: 100vh;         /* 100vh = toute la hauteur de l'écran */
+
+  margin: 0;                 /* enlève la marge par défaut du navigateur */
+  padding: 16px;             /* un peu d'air sur les bords (utile sur mobile) */
+}
+
+/* ---------------------------------------------------------------------------
+   3) LA CARTE QUI CONTIENT LE JEU
+--------------------------------------------------------------------------- */
+.carte {
+  background-color: var(--fond-carte);
+  width: 100%;
+  max-width: 460px;          /* la carte ne dépasse jamais 460px de large */
+  padding: 28px 24px;
+  border-radius: 20px;       /* coins arrondis */
+  /* Une ombre douce pour détacher la carte du fond. */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+  text-align: center;        /* centre le texte à l'intérieur de la carte */
+}
+
+/* Le titre du jeu. */
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.3;
+  margin: 0 0 6px;
+}
+
+/* La petite consigne sous le titre. */
+.consigne {
+  color: var(--texte-doux);
+  margin: 0 0 18px;
+}
+
+/* ---------------------------------------------------------------------------
+   4) LES 3 GROS BOUTONS DE COUPS
+--------------------------------------------------------------------------- */
+
+/*
+  On range les boutons côte à côte avec une "grille" de 3 colonnes égales.
+  "gap" est l'espace entre les boutons.
+*/
+.boutons-coups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.bouton-coup {
+  /* On empile l'emoji au-dessus du nom, et on les centre. */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  padding: 18px 8px;
+  cursor: pointer;           /* la souris devient une main au survol */
+  background-color: var(--fond-page);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  font-size: 1rem;
+  color: var(--texte);
+
+  /* Rend les changements (couleur, taille) progressifs et doux. */
+  transition: transform 0.08s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+/* L'emoji, bien gros pour être visible. */
+.bouton-coup .emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+/* Le nom du coup sous l'emoji. */
+.bouton-coup .nom {
+  font-weight: 600;
+}
+
+/* Au SURVOL de la souris : la bordure se colore et le bouton remonte un peu. */
+.bouton-coup:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Au moment du CLIC : le bouton "s'enfonce" légèrement. */
+.bouton-coup:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ---------------------------------------------------------------------------
+   5) LA ZONE DE RÉSULTAT
+--------------------------------------------------------------------------- */
+.resultat {
+  margin-bottom: 22px;
+}
+
+/* La ligne "Toi : 🪨 contre Ordi : ✂️". */
+.ligne-choix {
+  display: flex;
+  flex-wrap: wrap;           /* passe à la ligne si ça ne tient pas (mobile) */
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: var(--texte-doux);
+  margin: 0 0 10px;
+}
+
+/* Le choix affiché (emoji + mot), mis en évidence. */
+.ligne-choix .valeur {
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.ligne-choix .vs {
+  font-style: italic;
+}
+
+/* Le message de résultat, en plus gros. */
+.message {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  min-height: 1.5em;         /* réserve la place pour éviter que ça "saute" */
+}
+
+/*
+  Ces 3 classes seront AJOUTÉES par le JavaScript sur le message
+  selon l'issue de la manche, pour le colorer.
+*/
+.message.gagne   { color: var(--gagne); }
+.message.perdu   { color: var(--perdu); }
+.message.egalite { color: var(--egalite); }
+
+/* ---------------------------------------------------------------------------
+   6) LE TABLEAU DU SCORE
+--------------------------------------------------------------------------- */
+.score {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.score-case {
+  background-color: var(--fond-page);
+  border-radius: 14px;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-titre {
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.score-nombre {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   7) LE BOUTON DE RÉINITIALISATION
+--------------------------------------------------------------------------- */
+.bouton-reset {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.bouton-reset:hover {
+  background-color: var(--accent-fonce);
+}
+
+.bouton-reset:active {
+  transform: scale(0.98);
+}
+
+/* ---------------------------------------------------------------------------
+   8) RESPONSIVE : adaptation aux PETITS ÉCRANS (téléphones)
+   La règle ci-dessous ne s'applique QUE si l'écran fait 400px de large
+   ou moins. On y empile les 3 boutons de coups les uns sous les autres
+   pour qu'ils restent bien gros et faciles à toucher au doigt.
+--------------------------------------------------------------------------- */
+@media (max-width: 400px) {
+  .boutons-coups {
+    grid-template-columns: 1fr;   /* 1 seule colonne = boutons empilés */
+  }
+
+  /* Sur une seule colonne, on remet l'emoji et le nom côte à côte. */
+  .bouton-coup {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+}

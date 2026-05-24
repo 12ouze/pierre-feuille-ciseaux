@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  index.html — La STRUCTURE de la page (le « squelette »)
+  ============================================================================
+  Un fichier HTML décrit le CONTENU et l'organisation de la page :
+  les titres, les boutons, les zones de texte... mais PAS leur apparence
+  (ça, c'est le rôle de style.css) ni leur comportement (rôle de script.js).
+
+  💡 Pour ouvrir le jeu : double-clique simplement sur ce fichier dans le
+     Finder. Il s'ouvrira dans ton navigateur. Garde bien les 3 fichiers
+     (index.html, style.css, script.js) DANS LE MÊME DOSSIER, sinon le
+     design et le jeu ne se chargeront pas.
+-->
+
+<!-- lang="fr" indique que la page est en français (utile pour le navigateur). -->
+<html lang="fr">
+
+<head>
+  <!-- charset="utf-8" : permet d'afficher correctement les accents (é, È...) et les emojis. -->
+  <meta charset="utf-8">
+
+  <!--
+    La balise "viewport" est INDISPENSABLE pour que la page s'affiche bien
+    sur téléphone : elle dit au mobile d'utiliser sa vraie largeur d'écran.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Le titre affiché dans l'onglet du navigateur. -->
+  <title>Pierre-Feuille-Ciseaux</title>
+
+  <!--
+    On relie la feuille de style (le design). "href" est le chemin du fichier :
+    comme il est dans le même dossier, on écrit juste son nom.
+  -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!--
+    .carte est un cadre centré qui contient tout le jeu.
+    Toutes les sections du jeu sont rangées à l'intérieur.
+  -->
+  <main class="carte">
+
+    <!-- ===== TITRE DU JEU ===== -->
+    <h1>🪨 📄 ✂️<br>Pierre-Feuille-Ciseaux</h1>
+
+    <!-- Petite consigne pour le joueur. -->
+    <p class="consigne">Choisis ton coup&nbsp;:</p>
+
+    <!-- ===== LES 3 GROS BOUTONS ===== -->
+    <!--
+      Chaque bouton porte un attribut data-coup="...".
+      C'est une étiquette invisible que le JavaScript lira pour savoir
+      quel coup a été cliqué (plus fiable que de relire le texte du bouton).
+    -->
+    <div class="boutons-coups">
+      <button class="bouton-coup" data-coup="pierre">
+        <span class="emoji">🪨</span>
+        <span class="nom">Pierre</span>
+      </button>
+
+      <button class="bouton-coup" data-coup="feuille">
+        <span class="emoji">📄</span>
+        <span class="nom">Feuille</span>
+      </button>
+
+      <button class="bouton-coup" data-coup="ciseaux">
+        <span class="emoji">✂️</span>
+        <span class="nom">Ciseaux</span>
+      </button>
+    </div>
+
+    <!-- ===== ZONE DE RÉSULTAT DE LA MANCHE ===== -->
+    <!--
+      Ces <span> sont VIDES au départ. Le JavaScript viendra y écrire,
+      à chaque clic, le choix du joueur, celui de l'ordi et le résultat.
+      Les "id" sont des noms uniques qui permettent au JS de retrouver
+      chaque zone précise.
+    -->
+    <section class="resultat">
+      <p class="ligne-choix">
+        <span class="etiquette">Toi&nbsp;:</span>
+        <span id="choix-joueur" class="valeur">—</span>
+        <span class="vs">contre</span>
+        <span class="etiquette">Ordi&nbsp;:</span>
+        <span id="choix-ordi" class="valeur">—</span>
+      </p>
+
+      <!-- Le message "Tu gagnes !", "L'ordinateur gagne." ou "Égalité !". -->
+      <p id="message-resultat" class="message">Clique sur un coup pour commencer&nbsp;!</p>
+    </section>
+
+    <!-- ===== TABLEAU DU SCORE ===== -->
+    <!-- Les 3 compteurs. Le JS mettra à jour les nombres dans les <span>. -->
+    <section class="score">
+      <div class="score-case">
+        <span class="score-titre">Toi</span>
+        <span id="score-joueur" class="score-nombre">0</span>
+      </div>
+      <div class="score-case">
+        <span class="score-titre">Ordi</span>
+        <span id="score-ordi" class="score-nombre">0</span>
+      </div>
+      <div class="score-case">
+        <span class="score-titre">Égalités</span>
+        <span id="score-egalite" class="score-nombre">0</span>
+      </div>
+    </section>
+
+    <!-- ===== BOUTON DE RÉINITIALISATION ===== -->
+    <button id="bouton-reset" class="bouton-reset">↺ Réinitialiser le score</button>
+
+  </main>
+
+  <!--
+    On charge le JavaScript (la logique du jeu) TOUT À LA FIN du <body>.
+    Pourquoi à la fin ? Pour que tous les boutons et zones ci-dessus
+    existent déjà au moment où le script essaie de les utiliser.
+  -->
+  <script src="script.js"></script>
+
+</body>
+</html>
